@@ -30,7 +30,7 @@ public class GerirHorarios implements Serializable {
     private static ArrayList<Professor> professor = new ArrayList();
     private static ArrayList<Sala> sala = new ArrayList();
     private static ArrayList<Turma> turma = new ArrayList();
-    private static ArrayList<Horarios> horarios = new ArrayList();
+    private static ArrayList<Aula> aula = new ArrayList();
 
     // Aceder aos arrays para leitura 
     public static ArrayList<Alunos> getAlunos() {
@@ -48,8 +48,8 @@ public class GerirHorarios implements Serializable {
     public static ArrayList<Turma> getTurma() {
         return turma;
     }
-    public static ArrayList<Horarios> getHorarios() {
-        return horarios;
+    public static ArrayList<Aula> getHorarios() {
+        return aula;
     }
     // Aceder aos arrays para escrita 
 
@@ -68,8 +68,8 @@ public class GerirHorarios implements Serializable {
     public static void setTurma(ArrayList<Turma> aTurma) {
         turma = aTurma;
     }
-    public static void setHorarios(ArrayList<Horarios> aHorarios) {
-        horarios = aHorarios;
+    public static void setHorarios(ArrayList<Aula> aHorarios) {
+        aula = aHorarios;
     }
     // Ler dados nos ficheiros
 
@@ -89,7 +89,7 @@ public class GerirHorarios implements Serializable {
         if (alunos.isEmpty()) {
             try {
 
-                BufferedReader br = new BufferedReader(new FileReader("alunos.txt"));
+               BufferedReader br = new BufferedReader(new FileReader("alunos.txt"));
 
                 while (br.ready()) {
 
@@ -118,7 +118,7 @@ public class GerirHorarios implements Serializable {
                 ioe.printStackTrace();
             }
         }
-    }
+   }
 
     public static void lerProfessores() {
 
@@ -215,9 +215,8 @@ public class GerirHorarios implements Serializable {
             if (turma.isEmpty()) {
                 try {
 
-                    BufferedReader br = new BufferedReader(new FileReader("turmas.txt"));
-
-                    while (br.ready()) {
+                BufferedReader br = new BufferedReader(new FileReader("turmas.txt"));
+  while (br.ready()) {
 
                         String linha = br.readLine();
                         if (!linha.contains("designacao")) {
@@ -234,12 +233,13 @@ public class GerirHorarios implements Serializable {
                         }
                     }
                     br.close();
-//                    for (int i = 0; i < turma.size(); i++) {
-//                        System.out.println(turma.get(i));
-//                    }
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
+                for (int i = 0; i < sala.size(); i++) {
+                    System.out.println(sala.get(i));
                 }
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+                
             }
         }
     }
@@ -247,54 +247,53 @@ public class GerirHorarios implements Serializable {
 
       
 
-           
- String designacao_turma;
-     String sigla_disciplina;
-      String tipo_aula;
-      int dia_semana;
-     int Hora_inicio;  
-     int duracao_aula;
-     String professor;
-     String sala;
-           
+
+        String designacao_turma;
+        String sigla_disciplina;
+        String tipo_aula;
+        int dia_semana;
+        int Hora_inicio;
+        int duracao_aula;
+        String professores;
+        String salas;
 
 
-            String[] slit;
+
+        String[] slit;
 
 
-            if (horarios.isEmpty()) {
-                try {
-
-                    BufferedReader br = new BufferedReader(new FileReader("horarios.txt"));
-
+        if (aula.isEmpty()) {
+            try {
+               BufferedReader br = new BufferedReader(new FileReader("horarios.txt")); 
                     while (br.ready()) {
 
                         String linha = br.readLine();
                         if (!linha.contains("designacao_turma")) {
-                        slit = linha.split(";");
+                            slit = linha.split(";");
 
-                        designacao_turma = slit[0];
-                        sigla_disciplina = slit[1];
-                        tipo_aula = slit[2];
-                        dia_semana = Integer.parseInt(slit[3]);
-                        Hora_inicio = Integer.parseInt(slit[4]);
-                        duracao_aula = Integer.parseInt(slit[5]);
+                            designacao_turma = slit[0];
+                            sigla_disciplina = slit[1];
+                            tipo_aula = slit[2];
+                            dia_semana = Integer.parseInt(slit[3]);
+                            Hora_inicio = Integer.parseInt(slit[4]);
+                            duracao_aula = Integer.parseInt(slit[5]);
 
-                        professor = slit[6];
-                        sala = slit[7];
+                            professores = slit[6];
+                            salas = slit[7];
 
-                        Horarios h = new Horarios(designacao_turma, sigla_disciplina, tipo_aula, dia_semana, Hora_inicio, duracao_aula, professor, sala);
-                        horarios.add(h);
+                            Aula h = new Aula(designacao_turma, 
+                                    sigla_disciplina, tipo_aula, dia_semana,
+                                    Hora_inicio, duracao_aula, professores, salas);
+                            aula.add(h);
+                        }
                     }
+                
+                for (int i = 0; i < aula.size(); i++) {
+                    System.out.println(aula.get(i));
                 }
-                br.close();
-                for (int i = 0; i < horarios.size(); i++) {
-                    System.out.println(horarios.get(i));
-                }
-//                    
+                    
             } catch (IOException ioe) {
                 ioe.printStackTrace();
-
             }
         }
     }
@@ -360,7 +359,7 @@ public class GerirHorarios implements Serializable {
 
 // Ler todos os dados    
     public static void lerDados() {
-        lerAlunos();
+       lerAlunos();
 //        inserirAlunos();
 //        lerProfessores();
 //        inserirProfessores();
